@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { HiOutlineUserRemove } from "react-icons/hi";
-import place from "../projects.jpg";
+import place from "./projects.jpg";
 import { AuthContext } from "./../Register/AuthProvider";
 import firebase from "firebase";
 import { app } from "./../../base";
@@ -14,12 +14,12 @@ export const CreatedProjects = () => {
   const [img, setImg] = React.useState(place);
 
   const [image, setImage] = React.useState(place);
-  const [avatar, setAvatar] = React.useState("");
+  const [projectImage, setProjectImage] = React.useState("");
   const [percent, setPercent] = React.useState(0.0001);
 
-  const [projectName, setProjectName] = React.useState("");
-  const [projectDesc, setProjectDesc] = React.useState("");
-  const [projectDate, setProjectDate] = React.useState("");
+  const [projTitile, setProjTitile] = React.useState("");
+  const [projDeadLine, setProjDeadLine] = React.useState("");
+  const [projDesc, setProjDesc] = React.useState("");
 
   const imgUpload = (e) => {
     const file = e.target.files[0];
@@ -65,7 +65,8 @@ export const CreatedProjects = () => {
       (err) => console.log(err.message),
       () => {
         storageRef.snapshot.ref.getDownloadURL().then((URL) => {
-          setAvatar(URL);
+          setProjectImage(URL);
+          setImage(URL);
           console.log(URL);
         });
       }
@@ -77,17 +78,19 @@ export const CreatedProjects = () => {
 
     if (saveUser) {
       await app.firestore().collection("pushing").doc().set({
-        projectName,
-        projectDesc,
-        projectDate,
+        buttonState: true,
+        projTitile,
+        projDesc,
+        projDeadLine,
         team,
+        img,
         createdBy: saveUser.uid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      setProjectName("");
-      setProjectDate("");
-      setProjectDesc("");
+      setProjTitile("");
+      setProjDeadLine("");
+      setProjDesc("");
     }
   };
   console.log("User: ", currentUser?.uid);
@@ -108,9 +111,9 @@ export const CreatedProjects = () => {
               <MainLabel>Project Title</MainLabel>
               <MainInput
                 placeholder="Project Title"
-                value={projectName}
+                value={projTitile}
                 onChange={(e) => {
-                  setProjectName(e.target.value);
+                  setProjTitile(e.target.value);
                 }}
               />
             </InputHolder>
@@ -118,9 +121,9 @@ export const CreatedProjects = () => {
               <MainLabel>Project Description</MainLabel>
               <MainInput
                 placeholder="Project Description"
-                value={projectDesc}
+                value={projDesc}
                 onChange={(e) => {
-                  setProjectDesc(e.target.value);
+                  setProjDesc(e.target.value);
                 }}
               />
             </InputHolder>
@@ -128,9 +131,9 @@ export const CreatedProjects = () => {
               <MainLabel>Project Deadline</MainLabel>
               <MainInput
                 placeholder="Project DeadLine"
-                value={projectDate}
+                value={projDeadLine}
                 onChange={(e) => {
-                  setProjectDate(e.target.value);
+                  setProjDeadLine(e.target.value);
                 }}
               />
             </InputHolder>

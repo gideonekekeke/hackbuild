@@ -1,13 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { AiFillFileAdd, AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BiHelpCircle } from "react-icons/bi";
-import { GlobalContext } from "../AuthState/GlobalContext";
 export const HackerthonProject = () => {
-  const { current, currentData } = useContext(GlobalContext);
-  console.log("current", current);
-  console.log("currentData", currentData);
   return (
     <Container>
       <TopHolder>
@@ -27,8 +23,8 @@ export const HackerthonProject = () => {
               {" "}
               <IoMdNotificationsOutline /> <Dot dot="coral" />
             </Icon>
-            <Name>{current?.displayName}</Name>
-            <Image src={current?.photoURL} />
+            <Name>Peter</Name>
+            <Image />
           </AvatarHolder>
         </MainHolder>
       </TopHolder>

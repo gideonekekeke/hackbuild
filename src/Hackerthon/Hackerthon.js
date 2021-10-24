@@ -14,6 +14,7 @@ import { HackerthonProject } from "./HackerthonProject";
 import { CreatedProjects } from "../Projects/CreateProjects/CreatedProjects";
 import { Overview } from "../Projects/Overview/Overview";
 import { Register } from "./../Projects/Register/Register";
+import { app } from "./../base";
 
 export const Hackerthon = () => {
   const [toggle, setToggle] = React.useState(false);
@@ -25,6 +26,11 @@ export const Hackerthon = () => {
   const onToggle = () => {
     setToggle(!toggle);
   };
+
+  const logOut = async () => {
+    await app.auth().signOut();
+  };
+
   const onOverview = () => {
     setOverview(true);
     setProject(false);
@@ -105,7 +111,7 @@ export const Hackerthon = () => {
                 </Icon>
                 <Nav>Setting</Nav>
               </NavHolder>
-              <NavHolder bg>
+              <NavHolder bg onClick={logOut}>
                 <Icon>
                   <BiLogIn />
                 </Icon>
@@ -181,7 +187,7 @@ export const Hackerthon = () => {
                   </Icon>
                   <Nav>Setting</Nav>
                 </NavHolder>
-                <NavHolder bg>
+                <NavHolder bg onClick={logOut}>
                   <Icon>
                     <BiLogIn />
                   </Icon>

@@ -1,61 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import { HiCubeTransparent } from "react-icons/hi";
+import React from "react";
 import styled from "styled-components";
-import { GlobalContext } from "../../AuthState/GlobalContext";
-import { app } from "../../base";
-import TestProd from "../TestProd/TestProd";
 
 export const Overview = () => {
-  const [data, setData] = useState([]);
-  // const { current, currentData } = useContext(GlobalContext);
-  // console.log(current);
-  const getProject = async () => {
-    await app
-      .firestore()
-      .collection("pushing")
-      .onSnapshot((snap) => {
-        const i = [];
-        snap.forEach((doc) => {
-          i.push(doc.data());
-        });
-        setData(i);
-      });
-  };
-
-  useEffect(() => {
-    getProject();
-    console.log("grhsnhdxfnj", data);
-  }, []);
-
   return (
     <Container>
       <Wrapper>
         <Header>Project Listed </Header>
         <Add>Add a Project</Add>
-        <CardHolder>
-          {data.map(({ id, img, projTitile, team }) => (
-            <Card key={id}>
-              <MinCard>
-                <Color src={img} />
-                <Title>{projTitile}</Title>
-                <div>team members</div>
-                {team.map(({ id, teamMember }) => (
-                  <>
-                    <TestProd id={id} teamMember={teamMember} />
-                  </>
-                ))}
-              </MinCard>
-            </Card>
-          ))}
-        </CardHolder>
+
+        <Card>
+          <MinCard>
+            <Color />
+            <Title>title</Title>
+            <Desc>Desc</Desc>
+          </MinCard>
+        </Card>
       </Wrapper>
     </Container>
   );
 };
-
-const CardHolder = styled.div`
-  display: flex;
-`;
 
 const Add = styled.div`
   color: #004080;
@@ -77,10 +40,6 @@ const Add = styled.div`
   }
 `;
 
-const Desc1 = styled.div`
-  margin: 0 10px;
-  padding-bottom: 10px;
-`;
 const Desc = styled.div`
   margin: 0 10px;
   padding-bottom: 10px;
@@ -100,15 +59,14 @@ const Title = styled.div`
   padding: 20px 30px;
   flex: 1;
 `;
-const Color = styled.img`
+const Color = styled.div`
   width: 100%;
   height: 60%;
   background-color: rgba(232, 188, 102, 0.3);
-  object-fit: cover;
 `;
 const MinCard = styled.div`
   width: 250px;
-  /* height: 300px; */
+  height: 300px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   border-radius: 5px;
   transition: all 350ms;
